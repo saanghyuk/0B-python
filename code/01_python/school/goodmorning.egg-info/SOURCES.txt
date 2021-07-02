@@ -1,0 +1,11 @@
+setup.py
+dss/__init__.py
+dss/data1.py
+dss/data2.py
+goodmorning.egg-info/PKG-INFO
+goodmorning.egg-info/SOURCES.txt
+goodmorning.egg-info/dependency_links.txt
+goodmorning.egg-info/not-zip-safe
+goodmorning.egg-info/top_level.txt
+web/__init__.py
+web/url.py
