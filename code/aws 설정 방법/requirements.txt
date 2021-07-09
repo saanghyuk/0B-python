@@ -1,0 +1,17 @@
+ipython==7.8.0
+jupyter
+notebook==6.3.0
+numpy==1.17.2
+pandas==0.24.2
+requests
+bs4==4.8.1
+selenium
+matplotlib
+pillow
+seaborn
+scikit-learn
+scipy
+statsmodels
+# mysqlclient
+# sqlalchemy
+# pymongo==2.8.1
