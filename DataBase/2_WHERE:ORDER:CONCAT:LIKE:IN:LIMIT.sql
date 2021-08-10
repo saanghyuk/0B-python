@@ -45,4 +45,50 @@ WHERE age BETWEEN 20 AND 40
 ORDER BY name DESC;
 
 
+# CONCAT
+SELECT name, age, CONCAT(name, " and ",age) AS "name_age"
+FROM user1;
+
+
+# LIKE : where 절에서, 특정 문자열이 들어간 데이터 조회
+SELECT * 
+FROM user1 
+WHERE email LIKE "%@gmail.%";
+
+SELECT * 
+FROM user1 
+WHERE email NOT LIKE "%@gmail.%";
+
+SELECT * 
+FROM user1 
+WHERE email LIKE "p%";
+
+# IN
+SELECT * 
+FROM user1 
+WHERE name IN  ('SON', 'LEE');
+
+# Subquery is mainly used with Subquery. 
+SELECT * 
+FROM user1 
+WHERE name IN  (
+		SELECT DISTINCT(name) 
+		FROM user1 
+		WHERE age > 30
+);
+
+# LIMIT
+SELECT * FROM user1 LIMIT 3;
+
+#  3번째부터 밑으로 5개 의미 
+SELECT * FROM user1 LIMIT 3, 5;
+
+
+
+
+
+
+
+
+
 
