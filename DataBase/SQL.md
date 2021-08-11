@@ -91,3 +91,167 @@
 
     - ` $ mysql -u root -p sakila < sakila-data.sql`
 
+
+
+
+
+- #### JOIN
+
+  - 원래 테이블 모양,
+  -  **user**
+
+  ![1_1](./materials/1_1.png)
+
+  - **addr table**
+
+    ![1_1](./materials/1_2.png)
+
+  - **JOIN**
+	
+    총 20개 들어가게 된다.  그냥 이렇게만 하면, 아무 기준도 없고 아무것도 없음. 모든 조합 다 들어가게 됨. 
+  
+    ```sql
+    SELECT *
+    FROM add	r 
+    JOIN user;
+    ```
+  
+    ![1_1](./materials/1_3.png)
+  
+  - **JOIN ON** 기준을 준다. *두 ON 기준으로 교집합만 남는다.*
+  
+    ```sql
+    SELECT *
+    FROM addr 
+    JOIN user
+    ON addr.user_id = user.user_id;
+    ```
+  
+     ![1_1](./materials/1_4.png)
+  
+    당연하지만, 원하는 컬럼만 선택 가능. 
+  
+    ```sql
+    SELECT addr.addr, addr.user_id, user.name
+    FROM addr 
+    JOIN user
+    ON addr.user_id = user.user_id;
+    ```
+  
+  - **LEFT JOIN==LEFT OUTER JOIN** 왼쪽이 기준 
+  
+    ```sql
+    SELECT id, addr.addr, user.name
+    FROM addr
+    LEFT JOIN user
+    ON addr.user_id = user.user_id;
+    ```
+  
+    ![1_1](./materials/1_5.png)
+  
+    보통은 이럴 때, IFNULL을 사용 
+  
+    ```sql
+    SELECT id, addr.addr, addr.user_id, IFNULL(user.name, "NO VALUES")
+    FROM addr
+    LEFT OUTER JOIN user
+    ON addr.user_id = user.user_id;
+    ```
+  
+  - **RIGHT OUTER JOIN == RIGHT JOIN**
+  
+    ```sql
+    SELECT id, addr.addr, user.user_id, IFNULL(user.name, "NO VALUES")
+    FROM addr
+    RIGHT OUTER JOIN user
+    ON addr.user_id = user.user_id;
+    ```
+  
+    ![1_1](./materials/1_6.png)
+  
+  - OUTER JOIN(MYSQL에 없음. UNION으로 만들어 내는 것)
+  
+    **UNION : SELECT문의 결과를 합쳐서 출력**
+  
+    자동으로 중복을 제거해줌. 
+  
+    ```sql
+    SELECT name
+    FROM user
+    UNION
+    SELECT addr
+    FROM addr;
+    ```
+  
+    ![1_1](./materials/1_7.png)
+  
+    ```sql
+    SELECT *
+    FROM user
+    UNION
+    SELECT *
+    FROM addr;
+    ```
+  
+    컬럼이 다른 것끼리 합쳐버리면 아래처럼 에러남. 컬럼이 같은 애들끼리, 합칠 수 있음.
+  
+    **UNION이 쓸만한게, 그냥 스스로 한 테이블 내에서도 있던 중복이 사라짐.** 
+  
+    `Error Code: 1222. The used SELECT statements have a different number of columns`
+  
+    중복 제거를 안하고 싶으면, 
+  
+    **UNION ALL**
+  
+    ```sql
+    # UNION ALL: 중복 제거 X
+    SELECT name
+    FROM user
+    UNION ALL
+    SELECT addr
+    FROM addr;
+    ```
+  
+  - **OUTER JOIN**
+  
+    MYSQL에서 OUTER JOIN을 어떻게쓰냐면, 
+  
+    A를 가지고 LEFT OUTER JOIN한 다음에, B가지고 똑같이 RIGHT OUTER JOIN 
+  
+    그리고 두개를 합침. 
+  
+    그럼 중간에 겹치는거는 UNION 하면서 사라질거 아녀. 
+  
+    ```sql
+    SELECT user.name, addr.addr 
+    FROM user
+    LEFT JOIN addr 
+    ON user.user_id = addr.user_id;
+    ```
+  
+    ![1_1](./materials/1_8.png)
+  
+    ```sql
+    SELECT user.name, addr.addr 
+    FROM user
+    RIGHT JOIN addr 
+    ON user.user_id = addr.user_id;
+    ```
+  
+    ![1_1](./materials/1_9.png)
+  
+    이 둘을 합치면
+  
+    ```sql
+    (SELECT user.name, addr.addr 
+    FROM user
+    LEFT JOIN addr 
+    ON user.user_id = addr.user_id)
+    UNION
+    (SELECT user.name, addr.addr 
+    FROM user
+    RIGHT JOIN addr 
+    ON user.user_id = addr.user_id);
+    ```
+  
+    ![1_1](./materials/1_10.png)
