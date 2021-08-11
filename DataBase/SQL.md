@@ -52,3 +52,42 @@
 
     
 
+
+
+- #### Data Import
+
+  - #### Save Sample Data
+    - https://dev.mysql.com/doc/index-other.html
+    - world database zip 파일 다운로드
+    - 압축 해제 후 world.sql 파일을 서버로 이동(CyberDuck)
+    - database management app을 이용하여 world 데이터 베이스 생성
+    - 데이터 저장 방법 1
+    ```
+    $ mysql -u root -p world < world.sql
+    ```
+    - 데이터 저장 방법 2
+    ```
+    sql> create database world;
+    sql> use world;
+    sql> source world.sql
+    ```
+
+  - Sakila DB
+
+    - Sakila Data의 경우는 data와 schema를 두개 다 가지고 있음. 별개 파일. 
+
+      schema(테이블 만들고 셋팅하는 쿼리)를 먼저 임포트 하고, 그 다음에 다시 data(데이터 넣는 쿼리)를 가지고 와야 에러가 안남.
+
+    - *sakila database download*
+       \- https://dev.mysql.com/doc/index-other.html
+
+    - *Import sakila database*
+      ` $ mysql -u root -p`
+      ` sql> create database sakila; `
+
+      `sql> quit`
+
+    - `$ mysql -u root -p sakila < sakila-schema.sql`
+
+    - ` $ mysql -u root -p sakila < sakila-data.sql`
+
