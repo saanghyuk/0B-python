@@ -1,4 +1,4 @@
 /materials
-/crawling_selenium/crawling1/client_secret.json
-/crawling_selenium/crawling1/datas/
-/crawling_selenium/crawling3/article.csv
+/crawling_selenium/1_crawling_request/client_secret.json
+/crawling_selenium/1_crawling_request/datas/
+/crawling_selenium/3_crawling_selenium2/article.csv
